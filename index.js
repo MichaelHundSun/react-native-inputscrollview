@@ -2,7 +2,7 @@
  * Created by lvbingru on 12/16/15.
  */
 
-import React, {Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactNative, {
     InteractionManager, View, Text, ScrollView, Platform, Animated, UIManager, NativeModules, Dimensions,
     Keyboard,
@@ -12,13 +12,13 @@ const ViewPlugins = NativeModules.InputScrollViewPlugin;
 const dismissKeyboard = Keyboard.dismiss;
 
 const propTypes = {
-    distance : PropTypes.number,
-    tapToDismiss : PropTypes.bool,
+    distance: PropTypes.number,
+    tapToDismiss: PropTypes.bool,
 }
 
 const defaultProps = {
-    distance : 50,
-    tapToDismiss : true,
+    distance: 50,
+    tapToDismiss: true,
 }
 
 export default class InputScrollView extends Component {
@@ -59,7 +59,7 @@ export default class InputScrollView extends Component {
                 });
         }
     };
-    onKeyboardWillHide = e=> {
+    onKeyboardWillHide = e => {
         if (!this.scrollViewRef) {
             return;
         }
@@ -70,11 +70,11 @@ export default class InputScrollView extends Component {
     };
 
     render() {
-        const {distance, tapToDismiss, onKeyboardWillShow, keyboardShouldPersistTaps, children, ...others} = this.props
+        const { distance, tapToDismiss, onKeyboardWillShow, keyboardShouldPersistTaps, children, ...others } = this.props
         return (
             <View
-                style = {{flex:1}}
-                onStartShouldSetResponderCapture = {e=>{
+                style={{ flex: 1 }}
+                onStartShouldSetResponderCapture={e => {
                     if (tapToDismiss === true) {
                         const currentlyFocusedTextInput = TextInputState.currentlyFocusedField();
                         if (e.target != currentlyFocusedTextInput) {
@@ -82,7 +82,7 @@ export default class InputScrollView extends Component {
                                 ViewPlugins.isTextInput(
                                     e.target,
                                     r => {
-                                        if (r===false) {
+                                        if (r === false) {
                                             dismissKeyboard();
                                         }
                                     }
@@ -97,13 +97,13 @@ export default class InputScrollView extends Component {
                 }}
             >
                 <ScrollView
-                    style = {{flex:1}}
-                    contentContainerStyle = {[{alignItems : 'stretch',}]}
-                    keyboardShouldPersistTaps = {tapToDismiss?true:keyboardShouldPersistTaps}
+                    style={{ flex: 1 }}
+                    contentContainerStyle={[{ alignItems: 'stretch', }]}
+                    keyboardShouldPersistTaps={tapToDismiss ? 'always' : keyboardShouldPersistTaps ? always : 'never'}
                     ref={(srcollView) => {
                         this.scrollViewRef = srcollView;
                     }}
-                    onMomentumScrollEnd = {e=>{
+                    onMomentumScrollEnd={e => {
                         if (!this.moved) {
                             this.offsetY = Math.max(0, e.nativeEvent.contentOffset.y)
                         }
@@ -121,8 +121,8 @@ export default class InputScrollView extends Component {
         UIManager.measureLayout(
             currentlyFocusedTextInput,
             ReactNative.findNodeHandle(this.scrollViewRef.getInnerViewNode()),
-            e=>{console.warning(e)},
-            (left, top, width, height)=>{
+            e => { console.warning(e) },
+            (left, top, width, height) => {
                 let keyboardScreenY = Dimensions.get('window').height;
                 if (e) {
                     keyboardScreenY = e.endCoordinates.screenY;
@@ -140,7 +140,7 @@ export default class InputScrollView extends Component {
     }
 
     scrollToY(offsetY) {
-        this.scrollViewRef.scrollTo({x:0, y:offsetY});
+        this.scrollViewRef.scrollTo({ x: 0, y: offsetY });
     }
 }
 

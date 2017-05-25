@@ -26,6 +26,6 @@
     "semver":  "^5.1.0"
   },
   "peerDependencies": {
-    "react-native": "^0.35.0"
+    "react-native": "^0.44.0"
   }
 }
